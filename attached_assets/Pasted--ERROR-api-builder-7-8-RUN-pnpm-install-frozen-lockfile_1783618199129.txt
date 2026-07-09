@@ -1,0 +1,95 @@
+ => ERROR [api builder 7/8] RUN pnpm install --frozen-lockfile                                          64.4s
+ => CANCELED [frontend builder 7/8] RUN pnpm install --frozen-lockfile                                  66.9s
+------
+ > [api builder 7/8] RUN pnpm install --frozen-lockfile:
+0.938 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-11.10.0.tgz
+9.787 [WARN] The "pnpm" field in package.json is no longer read by pnpm. The following keys were ignored: "pnpm.onlyBuiltDependencies". See https://pnpm.io/settings for the new home of each setting.
+9.833 Scope: all 6 workspace projects
+11.33 ? Verifying lockfile against supply-chain policies (479 entries)...
+11.39 Lockfile is up to date, resolution step is skipped
+11.97 Progress: resolved 1, reused 0, downloaded 0, added 0
+12.04 Packages: +244
+12.04 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+13.03 Progress: resolved 244, reused 0, downloaded 0, added 0
+15.04 Progress: resolved 244, reused 0, downloaded 1, added 0
+17.01 Progress: resolved 244, reused 0, downloaded 9, added 0
+19.45 Progress: resolved 244, reused 0, downloaded 10, added 0
+20.53 Progress: resolved 244, reused 0, downloaded 19, added 0
+21.66 [WARN] Request took 10065ms: https://registry.npmjs.org/@hookform%2Fresolvers
+21.71 Progress: resolved 244, reused 0, downloaded 43, added 0
+21.72 [WARN] Request took 10210ms: https://registry.npmjs.org/@babel%2Ftypes
+21.73 [WARN] Request took 10061ms: https://registry.npmjs.org/@radix-ui%2Freact-avatar
+21.77 [WARN] Request took 10089ms: https://registry.npmjs.org/@radix-ui%2Freact-context-menu
+22.38 [WARN] Request took 10953ms: https://registry.npmjs.org/@babel%2Fgenerator
+22.44 [WARN] Request took 10927ms: https://registry.npmjs.org/@babel%2Ftraverse
+22.66 [WARN] Request took 10995ms: https://registry.npmjs.org/@radix-ui%2Freact-accordion
+22.77 Progress: resolved 244, reused 0, downloaded 54, added 0
+22.90 [WARN] Request took 11229ms: https://registry.npmjs.org/@radix-ui%2Freact-collection
+23.76 [WARN] Request took 12276ms: https://registry.npmjs.org/@babel%2Fparser
+23.87 Progress: resolved 244, reused 0, downloaded 62, added 0
+23.87 [WARN] Request took 12449ms: https://registry.npmjs.org/@babel%2Fcore
+23.90 [WARN] Request took 12212ms: https://registry.npmjs.org/@radix-ui%2Freact-collapsible
+24.77 [WARN] Request took 13103ms: https://registry.npmjs.org/@radix-ui%2Freact-checkbox
+24.95 Progress: resolved 244, reused 0, downloaded 77, added 4
+25.48 [WARN] Request took 13811ms: https://registry.npmjs.org/@radix-ui%2Freact-alert-dialog
+25.97 Progress: resolved 244, reused 0, downloaded 93, added 4
+27.04 Progress: resolved 244, reused 0, downloaded 112, added 4
+28.15 Progress: resolved 244, reused 0, downloaded 124, added 5
+29.39 Progress: resolved 244, reused 0, downloaded 132, added 8
+30.41 Progress: resolved 244, reused 0, downloaded 147, added 8
+31.01 [WARN] Request took 11262ms: https://registry.npmjs.org/@tailwindcss%2Foxide-linux-x64-gnu
+31.44 Progress: resolved 244, reused 0, downloaded 156, added 8
+32.11 [WARN] Request took 10344ms: https://registry.npmjs.org/caniuse-lite
+32.25 [WARN] Request took 22406ms: https://registry.npmjs.org/pnpm
+32.48 Progress: resolved 244, reused 0, downloaded 164, added 8
+32.62 [WARN] Request took 12771ms: https://registry.npmjs.org/@tailwindcss%2Foxide
+33.35 [WARN] Request took 12481ms: https://registry.npmjs.org/@types%2Fnode
+33.49 Progress: resolved 244, reused 0, downloaded 188, added 9
+34.14 [WARN] Request took 11027ms: https://registry.npmjs.org/electron-to-chromium
+34.50 Progress: resolved 244, reused 0, downloaded 192, added 12
+35.59 Progress: resolved 244, reused 0, downloaded 219, added 12
+36.58 Progress: resolved 244, reused 0, downloaded 239, added 12
+37.60 Progress: resolved 244, reused 0, downloaded 244, added 18
+38.67 Progress: resolved 244, reused 0, downloaded 244, added 79
+39.26 ￢ﾜﾓ Lockfile passes supply-chain policies (479 entries in 27.9s)
+39.70 Progress: resolved 244, reused 0, downloaded 244, added 119
+40.71 Progress: resolved 244, reused 0, downloaded 244, added 130
+41.72 Progress: resolved 244, reused 0, downloaded 244, added 157
+42.74 Progress: resolved 244, reused 0, downloaded 244, added 244, done
+54.49 
+54.49 dependencies:
+54.49 + @replit/connectors-sdk 0.4.1
+54.49 
+54.49 devDependencies:
+54.49 + prettier 3.9.4
+54.49 + typescript 5.9.3
+54.49 
+54.66 . preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+55.00 . preinstall: Done
+56.26 [ERR_PNPM_IGNORED_BUILDS] Ignored build scripts: esbuild@0.27.3
+56.26 
+[+] up 14/16npm approve-builds" to pick which dependencies should be allowed to run scripts.
+ ￢ﾜﾔ Image postgres:16-alpine            Pulled                                                            11.1s
+ ￢ﾠﾙ Image queue-manager-system-api      Building                                                          99.4s
+ ￢ﾠﾙ Image queue-manager-system-frontend Building                                                          99.4s
+Dockerfile.api:18
+
+--------------------
+
+  16 |     
+
+  17 |     # Install all dependencies (lockfile frozen for reproducibility)
+
+  18 | >>> RUN pnpm install --frozen-lockfile
+
+  19 |     
+
+  20 |     # Build ￢ﾀﾔ esbuild bundles everything into artifacts/api-server/dist/
+
+--------------------
+
+target api: failed to solve: process "/bin/sh -c pnpm install --frozen-lockfile" did not complete successfully: exit code: 1
+
+debian@debian:~/Queue-Manager-System$ docker compose ps
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+debian@debian:~/Queue-Manager-System$ docker compose logs -f
