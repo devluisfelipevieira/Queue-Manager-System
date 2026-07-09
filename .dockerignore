@@ -1,0 +1,16 @@
+**/.git
+**/.env
+**/node_modules
+**/dist
+**/*.log
+**/coverage
+
+# Replit-specific files (not needed in Docker build)
+.replit
+replit.nix
+.breakpoints
+.local
+attached_assets
+
+# Other artifacts not needed for this build
+artifacts/mockup-sandbox

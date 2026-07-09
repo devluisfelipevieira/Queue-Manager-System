@@ -1,0 +1,32 @@
+# ── Stage 1: Build ────────────────────────────────────────────────────────────
+FROM --platform=linux/amd64 node:24-bookworm-slim AS builder
+
+RUN corepack enable
+
+WORKDIR /app
+
+# Copy workspace manifests first — better layer caching
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+
+# Copy lib packages (api-client-react, api-zod, api-spec)
+COPY lib/ lib/
+
+# Copy the frontend artifact
+COPY artifacts/guiche/ artifacts/guiche/
+
+# Install all dependencies (lockfile frozen for reproducibility)
+RUN pnpm install --frozen-lockfile
+
+# Build the Vite app.
+# PORT is required by vite.config.ts validation but only used by the dev server.
+# BASE_PATH=/ serves assets from the root (no Replit subpath prefix).
+RUN PORT=3000 BASE_PATH=/ NODE_ENV=production \
+    pnpm --filter @workspace/guiche run build
+
+# ── Stage 2: Serve with nginx ─────────────────────────────────────────────────
+FROM --platform=linux/amd64 nginx:1.27-alpine AS runtime
+
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/artifacts/guiche/dist/public /usr/share/nginx/html
+
+EXPOSE 80

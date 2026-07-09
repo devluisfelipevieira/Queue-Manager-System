@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Gerenciador de Guichê"
+version = "1.0.0"
+id = "artifacts/guiche"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23442
+
+[services.development]
+run = "pnpm --filter @workspace/guiche run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/guiche", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/guiche/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23442"
+BASE_PATH = "/"

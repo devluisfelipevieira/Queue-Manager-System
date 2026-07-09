@@ -1,0 +1,257 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Gerenciador de Guichê API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: auth
+    description: Authentication
+  - name: desks
+    description: Desk management
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login with username and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current authenticated user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Current user info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /desks:
+    get:
+      operationId: getDesks
+      tags: [desks]
+      summary: Get all desks with their current status
+      responses:
+        "200":
+          description: List of desks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Desk"
+
+  /desks/summary:
+    get:
+      operationId: getDesksSummary
+      tags: [desks]
+      summary: Get desk summary grouped by sector
+      responses:
+        "200":
+          description: Desks grouped by sector
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DesksSummary"
+
+  /desks/{id}/free:
+    post:
+      operationId: freeDesk
+      tags: [desks]
+      summary: Mark a desk as free (available)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Desk updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Desk"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Desk not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /desks/{id}/occupy:
+    post:
+      operationId: occupyDesk
+      tags: [desks]
+      summary: Mark a desk as occupied
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Desk updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Desk"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Desk not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    LoginInput:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      required: [token, role, username]
+      properties:
+        token:
+          type: string
+        role:
+          type: string
+          description: "recepcao or mesa"
+        username:
+          type: string
+        deskId:
+          type: ["integer", "null"]
+        deskNumber:
+          type: ["integer", "null"]
+        sector:
+          type: ["string", "null"]
+
+    Desk:
+      type: object
+      required: [id, deskNumber, name, sector, status, updatedAt]
+      properties:
+        id:
+          type: integer
+        deskNumber:
+          type: integer
+        name:
+          type: string
+        sector:
+          type: string
+          description: "protocolo or divida_ativa"
+        status:
+          type: string
+          description: "free or occupied"
+        updatedAt:
+          type: string
+          format: date-time
+
+    DesksSummary:
+      type: object
+      required: [protocolo, divida_ativa, totalFree, totalOccupied]
+      properties:
+        protocolo:
+          type: array
+          items:
+            $ref: "#/components/schemas/Desk"
+        divida_ativa:
+          type: array
+          items:
+            $ref: "#/components/schemas/Desk"
+        totalFree:
+          type: integer
+        totalOccupied:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string

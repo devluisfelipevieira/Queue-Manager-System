@@ -1,0 +1,36 @@
+# ── Stage 1: Build ────────────────────────────────────────────────────────────
+FROM --platform=linux/amd64 node:24-bookworm-slim AS builder
+
+RUN corepack enable
+
+WORKDIR /app
+
+# Copy workspace manifests first — better layer caching
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+
+# Copy lib packages that api-server depends on
+COPY lib/ lib/
+
+# Copy the api-server artifact
+COPY artifacts/api-server/ artifacts/api-server/
+
+# Install all dependencies (lockfile frozen for reproducibility)
+RUN pnpm install --frozen-lockfile
+
+# Build — esbuild bundles everything into artifacts/api-server/dist/
+RUN pnpm --filter @workspace/api-server run build
+
+# ── Stage 2: Runtime ──────────────────────────────────────────────────────────
+# esbuild bundles all JS deps, so no node_modules needed at runtime.
+# Only the dist/ folder is copied — keeps the image small.
+FROM --platform=linux/amd64 node:24-bookworm-slim AS runtime
+
+WORKDIR /app
+
+COPY --from=builder /app/artifacts/api-server/dist ./dist
+
+ENV NODE_ENV=production
+
+EXPOSE 8080
+
+CMD ["node", "--enable-source-maps", "./dist/index.mjs"]
