@@ -15,7 +15,7 @@ COPY lib/ lib/
 COPY artifacts/guiche/ artifacts/guiche/
 
 # Install all dependencies (lockfile frozen for reproducibility)
-RUN pnpm install --ignore-scripts
+RUN pnpm install --ignore-scripts --network-timeout 300000
 RUN node node_modules/.pnpm/esbuild@0.27.3/node_modules/esbuild/install.js
 
 # Build the Vite app.
