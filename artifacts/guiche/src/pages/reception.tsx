@@ -35,7 +35,7 @@ export default function ReceptionPage() {
 
       <div className="grid md:grid-cols-2 gap-8">
         <SectorPanel title="Protocolo Geral" desks={summary.protocolo} />
-        <SectorPanel title="Dívida Ativa e Tributos" desks={summary.divida_ativa} />
+        <SectorPanel title="Dívida Ativa" desks={summary.divida_ativa} />
       </div>
     </div>
   );

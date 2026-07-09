@@ -47,7 +47,7 @@ export default function DeskPage({ user }: { user: AuthResponse }) {
           </div>
           <h2 className="text-5xl sm:text-6xl font-black text-gray-900 tracking-tight mb-4">{desk.name}</h2>
           <p className="text-gray-600 font-bold text-xl tracking-wide uppercase">
-            SETOR: {desk.sector === 'protocolo' ? 'PROTOCOLO GERAL' : 'DÍVIDA ATIVA E TRIBUTOS'}
+            SETOR: {desk.sector === 'protocolo' ? 'PROTOCOLO GERAL' : 'DÍVIDA ATIVA'}
           </p>
         </div>
 
