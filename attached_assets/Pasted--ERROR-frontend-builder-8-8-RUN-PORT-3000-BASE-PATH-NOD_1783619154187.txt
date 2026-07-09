@@ -1,0 +1,46 @@
+ => ERROR [frontend builder 8/8] RUN PORT=3000 BASE_PATH=/ NODE_ENV=production     pnpm --filter @works  2.4s
+------
+ > [frontend builder 8/8] RUN PORT=3000 BASE_PATH=/ NODE_ENV=production     pnpm --filter @workspace/guiche run build:
+1.434 $ vite build --config vite.config.ts
+1.751 ￢ﾖﾲ [WARNING] Cannot find base config file "../../tsconfig.base.json" [tsconfig.json]
+1.751 
+1.751     tsconfig.json:2:13:
+1.751       2 ￢ﾔﾂ   "extends": "../../tsconfig.base.json",
+1.751         ￢ﾕﾵ              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.751 
+1.978 vite v7.3.6 building client environment for production...
+2.070 ￢ﾜﾓ 0 modules transformed.
+2.074 ￢ﾜﾗ Build failed in 68ms
+2.074 error during build:
+2.074 [vite:build-html] failed to resolve "extends":"../../tsconfig.base.json" in /app/artifacts/guiche/tsconfig.json
+2.074 file: /app/artifacts/guiche/index.html
+2.074     at resolveExtends (file:///app/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:5809:8)
+2.074     at parseExtends (file:///app/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:5775:71)
+2.074     at parse$13 (file:///app/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:5677:23)
+2.074     at async loadTsconfigJsonForFile (file:///app/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:6302:37)
+2.074     at async transformWithEsbuild (file:///app/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:6086:55)
+2.074     at async Object.transform (file:///app/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:6172:20)
+2.074     at async transform (file:///app/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:21726:16)
+2.074     at async ModuleLoader.addModuleSource (file:///app/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:21946:36)
+2.107 /app/artifacts/guiche:
+2.107 [ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @workspace/guiche@0.0.0 build: `vite build --config vite.config.ts`
+2.107 Exit status 1
+------
+[+] build 0/2
+ ￢ﾠﾙ Image queue-manager-system-frontend Building                                                          65.6s
+ ￢ﾠﾙ Image queue-manager-system-api      Building                                                          65.6s
+Dockerfile.frontend:23
+
+--------------------
+
+  22 |     # BASE_PATH=/ serves assets from the root (no Replit subpath prefix).
+
+  23 | >>> RUN PORT=3000 BASE_PATH=/ NODE_ENV=production \
+
+  24 | >>>     pnpm --filter @workspace/guiche run build
+
+  25 |     
+
+--------------------
+
+target frontend: failed to solve: process "/bin/sh -c PORT=3000 BASE_PATH=/ NODE_ENV=production     pnpm --filter @workspace/guiche run build" did not complete successfully: exit code: 1
