@@ -1,0 +1,92 @@
+ => ERROR [api builder 7/8] RUN pnpm install --prefer-offline                                           57.5s
+ => CANCELED [frontend builder 7/8] RUN pnpm install --prefer-offline                                   58.3s
+------
+ > [api builder 7/8] RUN pnpm install --prefer-offline:
+0.603 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-11.10.0.tgz
+3.056 Scope: all 6 workspace projects
+3.502 ? Verifying lockfile against supply-chain policies (479 entries)...
+5.489 artifacts/api-server                     | [WARN] deprecated @types/bcryptjs@3.0.0
+5.489 Progress: resolved 1, reused 0, downloaded 0, added 0
+6.507 Progress: resolved 8, reused 0, downloaded 7, added 0
+7.511 Progress: resolved 15, reused 0, downloaded 14, added 0
+8.528 Progress: resolved 17, reused 0, downloaded 17, added 0
+9.575 Progress: resolved 18, reused 0, downloaded 18, added 0
+10.65 Progress: resolved 20, reused 0, downloaded 18, added 0
+11.67 Progress: resolved 22, reused 0, downloaded 21, added 0
+12.74 Progress: resolved 23, reused 0, downloaded 22, added 0
+13.77 Progress: resolved 24, reused 0, downloaded 22, added 0
+14.77 Progress: resolved 25, reused 0, downloaded 23, added 0
+16.65 Progress: resolved 25, reused 0, downloaded 24, added 0
+17.36 [WARN] Request took 12863ms: https://registry.npmjs.org/drizzle-orm
+20.24 Progress: resolved 26, reused 0, downloaded 24, added 0
+20.24 [WARN] Request took 13254ms: https://registry.npmjs.org/@types%2Fnode
+20.24 Progress: resolved 27, reused 0, downloaded 24, added 0
+21.27 [WARN] Request took 10979ms: https://registry.npmjs.org/electron-to-chromium
+21.27 [WARN] Request took 10744ms: https://registry.npmjs.org/framer-motion
+21.27 Progress: resolved 27, reused 0, downloaded 25, added 0
+23.33 [WARN] Request took 18117ms: https://registry.npmjs.org/typescript
+23.33 Progress: resolved 28, reused 0, downloaded 25, added 0
+24.94 Progress: resolved 28, reused 0, downloaded 26, added 0
+24.94 Progress: resolved 28, reused 0, downloaded 27, added 0
+28.14 Progress: resolved 29, reused 0, downloaded 27, added 0
+28.14 Progress: resolved 81, reused 0, downloaded 27, added 0
+31.59 Progress: resolved 82, reused 0, downloaded 27, added 0
+40.89 Progress: resolved 125, reused 0, downloaded 27, added 0
+43.28 Progress: resolved 179, reused 0, downloaded 28, added 0
+44.22 [WARN] Request took 22838ms: https://registry.npmjs.org/use-sync-external-store
+44.28 Progress: resolved 189, reused 0, downloaded 32, added 0
+44.41 [WARN] Request took 40539ms: https://registry.npmjs.org/@radix-ui%2Freact-collapsible
+44.89 [WARN] Request took 31744ms: https://registry.npmjs.org/typescript
+45.36 Progress: resolved 189, reused 0, downloaded 63, added 0
+46.14 [WARN] Request took 24711ms: https://registry.npmjs.org/react-is
+46.35 [WARN] Request took 24849ms: https://registry.npmjs.org/scheduler
+46.42 Progress: resolved 189, reused 0, downloaded 80, added 0
+46.72 [WARN] Request took 25121ms: https://registry.npmjs.org/react-refresh
+47.48 [WARN] Request took 25700ms: https://registry.npmjs.org/react
+47.52 Progress: resolved 189, reused 0, downloaded 95, added 0
+48.13 [WARN] Request took 26495ms: https://registry.npmjs.org/react-dom
+48.41 ￢ﾜﾓ Lockfile passes supply-chain policies (479 entries in 44.8s)
+48.52 Progress: resolved 189, reused 0, downloaded 101, added 0
+49.55 Progress: resolved 191, reused 0, downloaded 126, added 0
+50.59 Progress: resolved 244, reused 0, downloaded 151, added 0
+51.15 Packages: +243
+51.15 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+51.60 Progress: resolved 244, reused 0, downloaded 187, added 0
+52.66 Progress: resolved 244, reused 0, downloaded 237, added 4
+53.69 Progress: resolved 244, reused 0, downloaded 243, added 121
+54.14 Progress: resolved 244, reused 0, downloaded 243, added 243, done
+55.55 . preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+55.70 . preinstall: Done
+55.90 [WARN] Issues with peer dependencies found. Run "pnpm peers check" to list them.
+55.91 
+55.91 dependencies:
+55.91 + @replit/connectors-sdk 0.4.1
+55.91 
+55.91 devDependencies:
+55.91 + prettier 3.9.4 (3.9.5 is available)
+55.91 + typescript 5.9.3 (7.0.2 is available)
+55.91 
+56.18 [ERR_PNPM_IGNORED_BUILDS] Ignored build scripts: esbuild@0.27.3
+56.18 
+56.18 Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts.
+------
+[+] build 0/2
+ ￢ﾠﾙ Image queue-manager-system-frontend Building                                                          61.2s
+ ￢ﾠﾙ Image queue-manager-system-api      Building                                                          61.2s
+Dockerfile.api:18
+
+--------------------
+
+  16 |     
+
+  17 |     # Install all dependencies (lockfile frozen for reproducibility)
+
+  18 | >>> RUN pnpm install --prefer-offline
+
+  19 |     
+
+  20 |     # Build ￢ﾀﾔ esbuild bundles everything into artifacts/api-server/dist/
+
+--------------------
+
+target api: failed to solve: process "/bin/sh -c pnpm install --prefer-offline" did not complete successfully: exit code: 1

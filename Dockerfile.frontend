@@ -15,7 +15,7 @@ COPY lib/ lib/
 COPY artifacts/guiche/ artifacts/guiche/
 
 # Install all dependencies (lockfile frozen for reproducibility)
-RUN pnpm install --prefer-offline
+RUN pnpm install --prefer-offline --ignore-scripts && pnpm rebuild esbuild
 
 # Build the Vite app.
 # PORT is required by vite.config.ts validation but only used by the dev server.

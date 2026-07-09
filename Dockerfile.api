@@ -15,7 +15,7 @@ COPY lib/ lib/
 COPY artifacts/api-server/ artifacts/api-server/
 
 # Install all dependencies (lockfile frozen for reproducibility)
-RUN pnpm install --prefer-offline
+RUN pnpm install --prefer-offline --ignore-scripts && pnpm rebuild esbuild
 
 # Build — esbuild bundles everything into artifacts/api-server/dist/
 RUN pnpm --filter @workspace/api-server run build
