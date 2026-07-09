@@ -1,0 +1,249 @@
+ => CANCELED [api builder 7/9] RUN pnpm install --ignore-scripts                                       336.7s
+ => CACHED [frontend builder 4/9] COPY package.json pnpm-workspace.yaml pnpm-lock.yaml tsconfig.base.js  0.0s
+ => CACHED [frontend builder 5/9] COPY lib/ lib/                                                         0.0s
+ => CACHED [frontend builder 6/9] COPY artifacts/guiche/ artifacts/guiche/                               0.0s
+ => ERROR [frontend builder 7/9] RUN pnpm install --ignore-scripts                                     336.2s
+------
+ > [frontend builder 7/9] RUN pnpm install --ignore-scripts:
+0.607 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-11.10.0.tgz
+80.34 Scope: all 6 workspace projects
+80.71 ? Verifying lockfile against supply-chain policies (479 entries)...
+82.24 Progress: resolved 1, reused 0, downloaded 0, added 0
+83.28 Progress: resolved 4, reused 0, downloaded 0, added 0
+84.32 Progress: resolved 8, reused 0, downloaded 0, added 0
+85.34 Progress: resolved 18, reused 0, downloaded 0, added 0
+86.40 Progress: resolved 23, reused 0, downloaded 0, added 0
+87.54 Progress: resolved 32, reused 0, downloaded 2, added 0
+88.55 Progress: resolved 36, reused 0, downloaded 9, added 0
+89.66 Progress: resolved 38, reused 0, downloaded 14, added 0
+91.06 Progress: resolved 40, reused 0, downloaded 19, added 0
+91.22 [WARN] Request took 10178ms: https://registry.npmjs.org/@radix-ui%2Freact-select
+91.59 [WARN] Request took 10556ms: https://registry.npmjs.org/@radix-ui%2Freact-collapsible
+91.63 [WARN] Request took 10595ms: https://registry.npmjs.org/recharts
+91.66 artifacts/guiche                         | [WARN] deprecated recharts@2.15.4
+91.89 [WARN] Request took 10859ms: https://registry.npmjs.org/@radix-ui%2Freact-radio-group
+91.99 [WARN] Request took 10956ms: https://registry.npmjs.org/@radix-ui%2Freact-toggle-group
+92.07 Progress: resolved 46, reused 0, downloaded 26, added 0
+92.16 [WARN] Request took 10271ms: https://registry.npmjs.org/@radix-ui%2Freact-progress
+92.19 [WARN] Request took 11255ms: https://registry.npmjs.org/@radix-ui%2Freact-context-menu
+92.39 [WARN] Request took 10154ms: https://registry.npmjs.org/@radix-ui%2Freact-tabs
+92.73 [WARN] Request took 11689ms: https://registry.npmjs.org/@types%2Freact
+92.85 [WARN] Tarball download average speed 45 KiB/s (size 89 KiB) is below 50 KiB/s: https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.101.2.tgz (GET)
+92.91 [WARN] Request took 11870ms: https://registry.npmjs.org/@radix-ui%2Freact-tooltip
+92.93 [WARN] Request took 11410ms: https://registry.npmjs.org/@radix-ui%2Freact-hover-card
+92.96 [WARN] Request took 11527ms: https://registry.npmjs.org/@radix-ui%2Freact-dropdown-menu
+93.19 Progress: resolved 48, reused 0, downloaded 31, added 0
+93.34 [WARN] Request took 11430ms: https://registry.npmjs.org/@radix-ui%2Freact-scroll-area
+93.45 [WARN] Request took 11520ms: https://registry.npmjs.org/@radix-ui%2Freact-select
+93.50 [WARN] Request took 11835ms: https://registry.npmjs.org/@radix-ui%2Freact-popover
+93.53 [WARN] Request took 11636ms: https://registry.npmjs.org/@radix-ui%2Freact-roving-focus
+93.65 [WARN] Request took 11312ms: https://registry.npmjs.org/orval
+94.39 Progress: resolved 51, reused 0, downloaded 33, added 0
+94.60 [WARN] Request took 13069ms: https://registry.npmjs.org/@radix-ui%2Freact-menu
+94.79 [WARN] Request took 12432ms: https://registry.npmjs.org/@radix-ui%2Freact-tooltip
+95.07 [WARN] Request took 14037ms: https://registry.npmjs.org/@radix-ui%2Freact-popover
+95.34 [WARN] Request took 14308ms: https://registry.npmjs.org/@radix-ui%2Freact-dialog
+95.49 Progress: resolved 53, reused 0, downloaded 36, added 0
+95.68 [WARN] Request took 14641ms: https://registry.npmjs.org/@radix-ui%2Freact-dropdown-menu
+95.92 [WARN] Request took 14990ms: https://registry.npmjs.org/@radix-ui%2Freact-accordion
+96.03 [WARN] Request took 14140ms: https://registry.npmjs.org/@radix-ui%2Freact-radio-group
+96.31 [WARN] Request took 12699ms: https://registry.npmjs.org/prettier
+96.40 [WARN] Request took 15367ms: https://registry.npmjs.org/@tailwindcss%2Fvite
+96.63 Progress: resolved 55, reused 0, downloaded 43, added 0
+97.21 [WARN] Request took 10309ms: https://registry.npmjs.org/@tailwindcss%2Foxide-wasm32-wasi
+97.70 Progress: resolved 55, reused 0, downloaded 47, added 0
+97.82 [WARN] Request took 16779ms: https://registry.npmjs.org/lucide-react
+98.15 [WARN] Request took 10907ms: https://registry.npmjs.org/@tanstack%2Freact-query
+98.23 [WARN] Request took 15921ms: https://registry.npmjs.org/zod
+98.64 [WARN] Request took 12439ms: https://registry.npmjs.org/@tailwindcss%2Fnode
+98.72 Progress: resolved 56, reused 0, downloaded 51, added 0
+99.12 [WARN] Request took 10044ms: https://registry.npmjs.org/@types%2Freact
+99.21 [WARN] Request took 18174ms: https://registry.npmjs.org/@radix-ui%2Freact-accordion
+99.33 [WARN] Request took 12254ms: https://registry.npmjs.org/@tailwindcss%2Fvite
+100.0 [WARN] Request took 11969ms: https://registry.npmjs.org/@radix-ui%2Freact-slider
+100.4 Progress: resolved 58, reused 0, downloaded 51, added 0
+100.4 [WARN] Request took 20063ms: https://registry.npmjs.org/pnpm
+101.1 [WARN] Request took 12752ms: https://registry.npmjs.org/drizzle-kit
+101.2 [WARN] Request took 14880ms: https://registry.npmjs.org/@tailwindcss%2Foxide-linux-x64-gnu
+101.4 Progress: resolved 59, reused 0, downloaded 53, added 0
+101.8 [WARN] Request took 19495ms: https://registry.npmjs.org/@radix-ui%2Freact-toggle
+102.3 [WARN] Request took 11184ms: https://registry.npmjs.org/caniuse-lite
+102.5 [WARN] Request took 21449ms: https://registry.npmjs.org/vite
+102.7 [WARN] Request took 14210ms: https://registry.npmjs.org/drizzle-orm
+102.7 Progress: resolved 60, reused 0, downloaded 53, added 0
+103.0 [WARN] Request took 10435ms: https://registry.npmjs.org/drizzle-orm
+103.7 [WARN] Request took 16720ms: https://registry.npmjs.org/@tailwindcss%2Foxide
+103.8 [WARN] Request took 22751ms: https://registry.npmjs.org/react-hook-form
+103.8 Progress: resolved 61, reused 0, downloaded 53, added 0
+104.0 [WARN] Request took 22947ms: https://registry.npmjs.org/@types%2Fnode
+104.3 [WARN] Request took 23244ms: https://registry.npmjs.org/framer-motion
+104.8 [WARN] Request took 23746ms: https://registry.npmjs.org/react-dom
+104.9 Progress: resolved 64, reused 0, downloaded 53, added 0
+105.0 [WARN] Request took 23916ms: https://registry.npmjs.org/react
+105.9 Progress: resolved 65, reused 0, downloaded 53, added 0
+106.7 [WARN] Request took 25642ms: https://registry.npmjs.org/tailwindcss
+106.9 Progress: resolved 65, reused 0, downloaded 55, added 0
+107.4 [WARN] Request took 13686ms: https://registry.npmjs.org/framer-motion
+108.6 [WARN] Request took 19660ms: https://registry.npmjs.org/@types%2Fnode
+109.1 Progress: resolved 65, reused 0, downloaded 56, added 0
+109.5 [WARN] Request took 11508ms: https://registry.npmjs.org/react-refresh
+109.7 [WARN] Request took 28702ms: https://registry.npmjs.org/tailwind-merge
+110.1 Progress: resolved 66, reused 0, downloaded 56, added 0
+110.7 [WARN] Request took 12403ms: https://registry.npmjs.org/scheduler
+111.1 Progress: resolved 66, reused 0, downloaded 57, added 0
+111.2 [WARN] Request took 18346ms: https://registry.npmjs.org/electron-to-chromium
+111.8 [WARN] Request took 13960ms: https://registry.npmjs.org/react-hook-form
+112.6 [WARN] Request took 13300ms: https://registry.npmjs.org/use-sync-external-store
+114.5 [WARN] Request took 16675ms: https://registry.npmjs.org/react-dom
+116.8 [WARN] Request took 18108ms: https://registry.npmjs.org/tailwindcss
+117.7 [WARN] Request took 19633ms: https://registry.npmjs.org/react
+117.8 [WARN] Request took 36757ms: https://registry.npmjs.org/typescript
+117.9 Progress: resolved 67, reused 0, downloaded 57, added 0
+117.9 [WARN] Tarball download average speed 22 KiB/s (size 168 KiB) is below 50 KiB/s: https://registry.npmjs.org/tailwind-merge/-/tailwind-merge-3.6.0.tgz (GET)
+118.9 Progress: resolved 67, reused 0, downloaded 58, added 0
+121.4 [WARN] Request took 22310ms: https://registry.npmjs.org/typescript
+121.5 [WARN] Tarball download average speed 25 KiB/s (size 569 KiB) is below 50 KiB/s: https://registry.npmjs.org/zod/-/zod-3.25.76.tgz (GET)
+121.7 Progress: resolved 67, reused 0, downloaded 59, added 0
+122.7 Progress: resolved 67, reused 0, downloaded 61, added 0
+122.8 [WARN] Request took 10152ms: https://registry.npmjs.org/use-sync-external-store
+127.6 [WARN] Request took 22649ms: https://registry.npmjs.org/react-dom
+128.2 Progress: resolved 68, reused 0, downloaded 61, added 0
+129.0 [WARN] Request took 23542ms: https://registry.npmjs.org/react
+129.3 Progress: resolved 69, reused 0, downloaded 61, added 0
+130.3 [WARN] Request took 32416ms: https://registry.npmjs.org/react-is
+130.4 [WARN] Request took 19579ms: https://registry.npmjs.org/scheduler
+130.9 [WARN] Request took 21335ms: https://registry.npmjs.org/react-refresh
+131.6 [WARN] Request took 24791ms: https://registry.npmjs.org/tailwindcss
+131.7 Progress: resolved 70, reused 0, downloaded 61, added 0
+132.7 Progress: resolved 70, reused 0, downloaded 64, added 0
+133.3 [WARN] Request took 18721ms: https://registry.npmjs.org/react-dom
+135.1 [WARN] Request took 17381ms: https://registry.npmjs.org/react
+135.4 Progress: resolved 70, reused 0, downloaded 65, added 0
+140.7 Progress: resolved 70, reused 0, downloaded 66, added 0
+145.3 [WARN] GET https://registry.npmjs.org/react-icons/-/react-icons-5.7.0.tgz error (23). Will retry in 10 seconds. 2 retries left.
+146.1 Progress: resolved 70, reused 0, downloaded 67, added 0
+150.0 [WARN] Request took 19654ms: https://registry.npmjs.org/react-is
+150.1 ￢ﾜﾓ Lockfile passes supply-chain policies (479 entries in 1m 9.3s)
+157.5 [WARN] Request took 54990ms: https://registry.npmjs.org/vite
+158.1 Progress: resolved 71, reused 0, downloaded 67, added 0
+159.2 Progress: resolved 90, reused 0, downloaded 67, added 0
+160.3 Progress: resolved 97, reused 0, downloaded 67, added 0
+161.4 Progress: resolved 116, reused 0, downloaded 76, added 0
+162.6 Progress: resolved 144, reused 0, downloaded 82, added 0
+163.8 Progress: resolved 168, reused 0, downloaded 90, added 0
+165.0 Progress: resolved 169, reused 0, downloaded 94, added 0
+166.0 Progress: resolved 170, reused 0, downloaded 96, added 0
+166.3 [WARN] GET https://registry.npmjs.org/lucide-react/-/lucide-react-0.545.0.tgz error (23). Will retry in 10 seconds. 2 retries left.
+167.0 Progress: resolved 170, reused 0, downloaded 109, added 0
+167.3 [WARN] Tarball download average speed 46 KiB/s (size 50 KiB) is below 50 KiB/s: https://registry.npmjs.org/@orval/zod/-/zod-8.20.0.tgz (GET)
+167.9 [WARN] Tarball download average speed 43 KiB/s (size 69 KiB) is below 50 KiB/s: https://registry.npmjs.org/@orval/query/-/query-8.20.0.tgz (GET)
+168.0 Progress: resolved 172, reused 0, downloaded 120, added 0
+168.2 [WARN] Tarball download average speed 37 KiB/s (size 84 KiB) is below 50 KiB/s: https://registry.npmjs.org/execa/-/execa-9.6.1.tgz (GET)
+169.1 Progress: resolved 173, reused 0, downloaded 127, added 0
+170.6 [WARN] Tarball download average speed 45 KiB/s (size 199 KiB) is below 50 KiB/s: https://registry.npmjs.org/js-yaml/-/js-yaml-4.2.0.tgz (GET)
+170.6 [WARN] Tarball download average speed 14 KiB/s (size 67 KiB) is below 50 KiB/s: https://registry.npmjs.org/@orval/mock/-/mock-8.20.0.tgz (GET)
+170.7 Progress: resolved 173, reused 0, downloaded 128, added 0
+171.7 Progress: resolved 174, reused 0, downloaded 145, added 0
+172.7 Progress: resolved 174, reused 0, downloaded 151, added 0
+173.7 Progress: resolved 174, reused 0, downloaded 159, added 0
+174.7 Progress: resolved 174, reused 0, downloaded 163, added 0
+175.8 Progress: resolved 174, reused 0, downloaded 164, added 0
+176.8 Progress: resolved 174, reused 0, downloaded 165, added 0
+177.8 Progress: resolved 174, reused 0, downloaded 166, added 0
+178.0 [WARN] Request took 15110ms: https://registry.npmjs.org/scheduler
+178.7 [WARN] Tarball download average speed 44 KiB/s (size 484 KiB) is below 50 KiB/s: https://registry.npmjs.org/typedoc/-/typedoc-0.28.19.tgz (GET)
+179.0 [WARN] GET https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz error (23). Will retry in 10 seconds. 2 retries left.
+179.5 Progress: resolved 175, reused 0, downloaded 166, added 0
+180.3 [WARN] Request took 17964ms: https://registry.npmjs.org/react-refresh
+180.6 Progress: resolved 176, reused 0, downloaded 167, added 0
+180.9 [WARN] Request took 18013ms: https://registry.npmjs.org/react-is
+181.2 [WARN] Request took 18123ms: https://registry.npmjs.org/use-sync-external-store
+181.7 Progress: resolved 178, reused 0, downloaded 169, added 0
+183.2 Progress: resolved 223, reused 0, downloaded 170, added 0
+184.2 Progress: resolved 275, reused 0, downloaded 170, added 0
+185.5 Progress: resolved 280, reused 0, downloaded 173, added 0
+186.2 [WARN] Tarball download average speed 32 KiB/s (size 50 KiB) is below 50 KiB/s: https://registry.npmjs.org/d3-shape/-/d3-shape-3.2.0.tgz (GET)
+186.2 [WARN] Tarball download average speed 26 KiB/s (size 36 KiB) is below 50 KiB/s: https://registry.npmjs.org/@babel/helper-module-transforms/-/helper-module-transforms-7.29.7.tgz (GET)
+187.6 Progress: resolved 281, reused 0, downloaded 173, added 0
+187.6 [WARN] Tarball download average speed 12 KiB/s (size 34 KiB) is below 50 KiB/s: https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz (GET)
+187.6 [WARN] Tarball download average speed 38 KiB/s (size 78 KiB) is below 50 KiB/s: https://registry.npmjs.org/@scalar/helpers/-/helpers-0.9.0.tgz (GET)
+189.0 Progress: resolved 281, reused 0, downloaded 174, added 0
+190.1 Progress: resolved 281, reused 0, downloaded 189, added 0
+191.2 Progress: resolved 283, reused 0, downloaded 219, added 0
+192.6 Progress: resolved 296, reused 0, downloaded 224, added 0
+193.6 Progress: resolved 332, reused 0, downloaded 227, added 0
+194.6 Progress: resolved 344, reused 0, downloaded 235, added 0
+195.8 Progress: resolved 348, reused 0, downloaded 256, added 0
+196.9 Progress: resolved 348, reused 0, downloaded 268, added 0
+198.3 [WARN] Tarball download average speed 24 KiB/s (size 815 KiB) is below 50 KiB/s: https://registry.npmjs.org/motion-dom/-/motion-dom-12.42.2.tgz (GET)
+198.4 Packages: +346
+198.4 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+199.1 Progress: resolved 348, reused 0, downloaded 269, added 0
+200.1 Progress: resolved 348, reused 0, downloaded 275, added 0
+201.1 Progress: resolved 348, reused 0, downloaded 278, added 0
+202.1 Progress: resolved 348, reused 0, downloaded 279, added 0
+203.2 Progress: resolved 348, reused 0, downloaded 285, added 0
+204.2 Progress: resolved 348, reused 0, downloaded 298, added 0
+205.2 Progress: resolved 348, reused 0, downloaded 303, added 4
+206.2 Progress: resolved 348, reused 0, downloaded 337, added 4
+207.2 Progress: resolved 348, reused 0, downloaded 338, added 88
+208.2 Progress: resolved 348, reused 0, downloaded 339, added 122
+209.2 Progress: resolved 348, reused 0, downloaded 339, added 125
+210.2 Progress: resolved 348, reused 0, downloaded 339, added 135
+211.7 Progress: resolved 348, reused 0, downloaded 339, added 136
+212.7 Progress: resolved 348, reused 0, downloaded 339, added 183
+213.7 Progress: resolved 348, reused 0, downloaded 339, added 243
+215.0 Progress: resolved 348, reused 0, downloaded 339, added 249
+215.4 [WARN] GET https://registry.npmjs.org/react-icons/-/react-icons-5.7.0.tgz error (23). Will retry in 1 minute. 1 retries left.
+216.1 Progress: resolved 348, reused 0, downloaded 339, added 257
+217.1 Progress: resolved 348, reused 0, downloaded 339, added 260
+220.9 Progress: resolved 348, reused 0, downloaded 339, added 261
+221.9 Progress: resolved 348, reused 0, downloaded 339, added 265
+223.3 Progress: resolved 348, reused 0, downloaded 340, added 265
+224.6 [WARN] GET https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz error (23). Will retry in 10 seconds. 2 retries left.
+224.9 Progress: resolved 348, reused 0, downloaded 340, added 277
+225.9 Progress: resolved 348, reused 0, downloaded 340, added 281
+234.1 Progress: resolved 348, reused 0, downloaded 341, added 281
+235.1 Progress: resolved 348, reused 0, downloaded 341, added 287
+236.1 Progress: resolved 348, reused 0, downloaded 341, added 334
+237.9 Progress: resolved 348, reused 0, downloaded 341, added 339
+238.6 Progress: resolved 348, reused 0, downloaded 341, added 340
+245.5 Progress: resolved 348, reused 0, downloaded 341, added 341
+249.1 [WARN] GET https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz error (23). Will retry in 1 minute. 1 retries left.
+250.9 [WARN] GET https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.27.3.tgz error (23). Will retry in 10 seconds. 2 retries left.
+257.2 Progress: resolved 348, reused 0, downloaded 342, added 341
+259.6 [WARN] GET https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.32.0.tgz error (23). Will retry in 10 seconds. 2 retries left.
+260.8 Progress: resolved 348, reused 0, downloaded 342, added 342
+320.8 [WARN] GET https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.27.3.tgz error (23). Will retry in 1 minute. 1 retries left.
+329.6 [WARN] GET https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.32.0.tgz error (23). Will retry in 1 minute. 1 retries left.
+335.5 /app/artifacts/guiche:
+335.5 [23] The operation was aborted due to timeout
+335.5 
+335.5 This error happened while installing a direct dependency of /app/artifacts/guiche
+335.5 
+335.5 TimeoutError: The operation was aborted due to timeout
+335.5     at new DOMException (node:internal/per_context/domexception:76:18)
+335.5     at Timeout._onTimeout (node:internal/abort_controller:210:9)
+335.5     at listOnTimeout (node:internal/timers:605:17)
+335.5     at process.processTimers (node:internal/timers:541:7)
+------
+[+] build 0/2
+ ￢ﾠﾙ Image queue-manager-system-api      Building                                                         338.4s
+ ￢ﾠﾙ Image queue-manager-system-frontend Building                                                         338.4s
+Dockerfile.frontend:18
+
+--------------------
+
+  16 |     
+
+  17 |     # Install all dependencies (lockfile frozen for reproducibility)
+
+  18 | >>> RUN pnpm install --ignore-scripts
+
+  19 |     RUN node node_modules/.pnpm/esbuild@0.27.3/node_modules/esbuild/install.js
+
+  20 |     
+
+--------------------
+
+target frontend: failed to solve: process "/bin/sh -c pnpm install --ignore-scripts" did not complete successfully: exit code: 1
