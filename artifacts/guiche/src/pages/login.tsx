@@ -83,7 +83,7 @@ export default function LoginPage() {
           </form>
         </div>
         <div className="bg-gray-50 py-4 text-center border-t border-gray-100">
-           <p className="text-xs text-gray-500 font-medium">Uso exclusivo da Prefeitura Municipal</p>
+           <p className="text-xs text-gray-500 font-medium">Uso exclusivo da Prefeitura Municipal de Paraíba do Sul</p>
         </div>
       </div>
     </div>

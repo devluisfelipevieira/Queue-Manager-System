@@ -25,7 +25,7 @@ export function Layout({ children, user }: { children: ReactNode, user?: { usern
           </div>
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight leading-tight">Gerenciador de Guichê</h1>
-            <p className="text-xs text-blue-200 uppercase tracking-widest font-bold">Prefeitura Municipal</p>
+            <p className="text-xs text-blue-200 uppercase tracking-widest font-bold">Prefeitura Municipal de Paraíba do Sul</p>
           </div>
         </div>
         
