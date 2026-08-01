@@ -99,6 +99,10 @@ function scheduleReminder(data, overrideDelay) {
 
 async function handleAction(action) {
   overlayWindow.hide(); clearTimeout(overlayTimer);
+  if (currentReminder?.test) {
+    scheduleReminder(null);
+    return;
+  }
   if (action === "free" && currentReminder && currentToken) {
     try {
       const response = await fetch(`${config.serverUrl}/api/desks/${currentReminder.deskId}/free`, {
@@ -177,6 +181,13 @@ app.whenReady().then(() => {
   tray.setToolTip("Gerenciador de Guichê");
   tray.setContextMenu(Menu.buildFromTemplate([
     { label: "Abrir sistema", click: () => { mainWindow.show(); mainWindow.focus(); } },
+    {
+      label: "Testar janela sobreposta",
+      click: () => {
+        currentReminder = { test: true, deskId: 0, deskName: "Teste do lembrete", reminderMinutes: 1 };
+        showOverlay();
+      },
+    },
     { type: "separator" },
     { label: "Sair", click: () => { quitting = true; app.quit(); } },
   ]));
