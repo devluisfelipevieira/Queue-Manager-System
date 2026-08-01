@@ -11,6 +11,9 @@ let reminderTimer;
 let overlayTimer;
 let currentReminder;
 let snoozedUntil = 0;
+let currentReminderKey;
+let currentToken;
+let pollTimer;
 
 function readConfig() {
   const locations = [path.join(process.resourcesPath, "config.json"), path.join(__dirname, "config.json")];
@@ -94,17 +97,81 @@ function scheduleReminder(data, overrideDelay) {
   reminderTimer = setTimeout(fireReminder, overrideDelay ?? Math.max(0, dueAt - Date.now()));
 }
 
-function handleAction(action) {
+async function handleAction(action) {
   overlayWindow.hide(); clearTimeout(overlayTimer);
-  mainWindow.webContents.send("reminder:action", action);
-  if (action === "free") { mainWindow.show(); mainWindow.focus(); }
-  else scheduleReminder(currentReminder, 5 * 60_000);
+  if (action === "free" && currentReminder && currentToken) {
+    try {
+      const response = await fetch(`${config.serverUrl}/api/desks/${currentReminder.deskId}/free`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${currentToken}` },
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      currentReminderKey = undefined;
+      scheduleReminder(null);
+      mainWindow.show();
+      mainWindow.focus();
+      return;
+    } catch {
+      new Notification({ title: "Não foi possível liberar a mesa", body: "Abra o sistema e tente novamente." }).show();
+      showOverlay();
+      return;
+    }
+  }
+  if (action === "snooze") scheduleReminder(currentReminder, 5 * 60_000);
+}
+
+async function pollDeskState() {
+  try {
+    const token = await mainWindow.webContents.executeJavaScript("localStorage.getItem('guiche_token')", true);
+    if (!token) {
+      currentToken = undefined;
+      currentReminderKey = undefined;
+      scheduleReminder(null);
+      return;
+    }
+    currentToken = token;
+    const headers = { Authorization: `Bearer ${token}` };
+    const meResponse = await fetch(`${config.serverUrl}/api/auth/me`, { headers });
+    if (!meResponse.ok) return;
+    const user = await meResponse.json();
+    if (user.role !== "mesa" || !user.deskId) {
+      currentReminderKey = undefined;
+      scheduleReminder(null);
+      return;
+    }
+    const [desksResponse, settingsResponse] = await Promise.all([
+      fetch(`${config.serverUrl}/api/desks`, { headers }),
+      fetch(`${config.serverUrl}/api/settings`, { headers }),
+    ]);
+    if (!desksResponse.ok || !settingsResponse.ok) return;
+    const desks = await desksResponse.json();
+    const settings = await settingsResponse.json();
+    const desk = desks.find(item => item.id === user.deskId);
+    if (!desk || desk.status !== "occupied") {
+      currentReminderKey = undefined;
+      scheduleReminder(null);
+      return;
+    }
+    const key = `${desk.id}:${desk.updatedAt}:${settings.reminderMinutes}`;
+    if (key === currentReminderKey) return;
+    currentReminderKey = key;
+    scheduleReminder({
+      deskId: desk.id,
+      deskName: desk.name,
+      occupiedAt: desk.updatedAt,
+      reminderMinutes: settings.reminderMinutes,
+    });
+  } catch {
+    // A temporary network/navigation failure is retried by the next poll.
+  }
 }
 
 app.whenReady().then(() => {
   app.setAppUserModelId("br.gov.rj.paraibadosul.guiche");
   app.setLoginItemSettings({ openAtLogin: true, path: process.execPath });
   createMainWindow(); createOverlay();
+  mainWindow.webContents.on("did-finish-load", pollDeskState);
+  pollTimer = setInterval(pollDeskState, 5000);
   const icon = path.join(__dirname, "icon.svg");
   tray = new Tray(icon);
   tray.setToolTip("Gerenciador de Guichê");
@@ -114,7 +181,8 @@ app.whenReady().then(() => {
     { label: "Sair", click: () => { quitting = true; app.quit(); } },
   ]));
   tray.on("double-click", () => { mainWindow.show(); mainWindow.focus(); });
-  ipcMain.on("reminder:set", (_event, data) => scheduleReminder(data));
+  // Kept for compatibility/diagnostics; native polling is authoritative.
+  ipcMain.on("reminder:set", () => {});
   ipcMain.on("overlay:action", (_event, action) => handleAction(action));
   if (config.updateUrl) {
     autoUpdater.setFeedURL({ provider: "generic", url: config.updateUrl });
@@ -122,6 +190,6 @@ app.whenReady().then(() => {
   }
 });
 
-app.on("before-quit", () => { quitting = true; });
+app.on("before-quit", () => { quitting = true; clearInterval(pollTimer); });
 app.on("window-all-closed", event => event.preventDefault());
 app.on("activate", () => mainWindow?.show());
