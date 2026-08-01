@@ -52,7 +52,12 @@ function createOverlay() {
   overlayWindow = new BrowserWindow({
     width: 430, height: 190, show: false, frame: false, resizable: false,
     alwaysOnTop: true, skipTaskbar: true, focusable: true,
-    webPreferences: { preload: path.join(__dirname, "overlay-preload.cjs"), nodeIntegration: false, contextIsolation: true, sandbox: true },
+    webPreferences: {
+      preload: path.join(__dirname, "overlay-preload.cjs"),
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false,
+    },
   });
   overlayWindow.loadFile(path.join(__dirname, "overlay.html"));
   overlayWindow.on("close", event => { if (!quitting) { event.preventDefault(); overlayWindow.hide(); } });
