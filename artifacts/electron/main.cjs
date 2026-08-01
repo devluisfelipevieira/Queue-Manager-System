@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, Menu, Notification, ipcMain, screen } = require("electron");
+const { app, BrowserWindow, Tray, Menu, Notification, ipcMain, screen, nativeImage } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const fs = require("node:fs");
 const path = require("node:path");
@@ -52,13 +52,19 @@ function createOverlay() {
   overlayWindow = new BrowserWindow({
     width: 430, height: 190, show: false, frame: false, resizable: false,
     alwaysOnTop: true, skipTaskbar: true, focusable: true,
-    webPreferences: {
-      preload: path.join(__dirname, "overlay-preload.cjs"),
-      nodeIntegration: false,
-      contextIsolation: true,
-      sandbox: false,
-    },
+    webPreferences: { nodeIntegration: false, contextIsolation: true, sandbox: true },
   });
+  overlayWindow.webContents.on("will-navigate", (event, url) => {
+    event.preventDefault();
+    try {
+      const actionUrl = new URL(url);
+      if (actionUrl.protocol !== "guiche-action:") return;
+      if (actionUrl.hostname === "free" || actionUrl.hostname === "snooze") {
+        handleAction(actionUrl.hostname);
+      }
+    } catch {}
+  });
+  overlayWindow.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
   overlayWindow.loadFile(path.join(__dirname, "overlay.html"));
   overlayWindow.on("close", event => { if (!quitting) { event.preventDefault(); overlayWindow.hide(); } });
 }
@@ -67,7 +73,10 @@ function showOverlay() {
   if (!currentReminder) return;
   const area = screen.getPrimaryDisplay().workArea;
   overlayWindow.setPosition(area.x + area.width - 450, area.y + area.height - 210);
-  overlayWindow.webContents.send("overlay:data", currentReminder);
+  const overlayTitle = `${currentReminder.deskName} ocupada há ${currentReminder.reminderMinutes} min`;
+  overlayWindow.webContents.executeJavaScript(
+    `document.getElementById("title").textContent = ${JSON.stringify(overlayTitle)}`,
+  ).catch(() => {});
   overlayWindow.setAlwaysOnTop(true, "screen-saver");
   overlayWindow.show();
   overlayWindow.focus();
@@ -181,10 +190,15 @@ app.whenReady().then(() => {
   createMainWindow(); createOverlay();
   mainWindow.webContents.on("did-finish-load", pollDeskState);
   pollTimer = setInterval(pollDeskState, 5000);
-  const icon = path.join(__dirname, "icon.svg");
-  tray = new Tray(icon);
+  // Windows NativeImage does not reliably render SVG files in the system
+  // tray. Use an embedded PNG so the icon is always visible.
+  const trayPng = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
+  const trayIcon = nativeImage.createFromBuffer(Buffer.from(trayPng, "base64")).resize({ width: 16, height: 16 });
+  tray = new Tray(trayIcon);
   tray.setToolTip("Gerenciador de Guichê");
   tray.setContextMenu(Menu.buildFromTemplate([
+    { label: `Versão ${app.getVersion()}`, enabled: false },
+    { type: "separator" },
     { label: "Abrir sistema", click: () => { mainWindow.show(); mainWindow.focus(); } },
     {
       label: "Testar janela sobreposta",

@@ -1,13 +1,13 @@
 {
   "name": "@workspace/guiche-desktop",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "description": "Aplicativo Windows do Gerenciador de Guichê",
   "main": "main.cjs",
   "scripts": {
     "dev": "electron .",
     "build": "electron-builder --win nsis",
-    "typecheck": "node --check main.cjs && node --check preload.cjs && node --check overlay-preload.cjs"
+    "typecheck": "node --check main.cjs && node --check preload.cjs"
   },
   "devDependencies": {
     "electron": "^43.2.0",
@@ -20,7 +20,7 @@
     "appId": "br.gov.rj.paraibadosul.guiche",
     "productName": "Gerenciador de Guichê",
     "asar": true,
-    "files": ["main.cjs", "preload.cjs", "overlay-preload.cjs", "overlay.html", "config.json", "icon.svg"],
+    "files": ["main.cjs", "preload.cjs", "overlay.html", "config.json", "icon.svg"],
     "extraResources": [{ "from": "config.json", "to": "config.json" }],
     "win": {
       "target": [{ "target": "nsis", "arch": ["x64"] }],
