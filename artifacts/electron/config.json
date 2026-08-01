@@ -1,4 +1,4 @@
 {
-  "serverUrl": "http://192.168.0.10:3000",
-  "updateUrl": ""
+  "serverUrl": "http://172.16.103.202:3000",
+  "updateUrl": "http://172.16.103.202:3000/updates"
 }
