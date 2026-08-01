@@ -18,7 +18,7 @@ export default function ReceptionPage() {
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-6 bg-white p-6 rounded-xl shadow-sm">
         <div>
-          <h2 className="text-3xl font-extrabold text-[#00315a] tracking-tight">Painel da Recepção</h2>
+          <h2 className="text-3xl font-extrabold text-[#012c61] tracking-tight">Painel da Recepção</h2>
           <p className="text-gray-500 font-medium mt-1">Acompanhamento em tempo real do atendimento</p>
         </div>
         <div className="flex gap-4">
@@ -47,7 +47,7 @@ function SectorPanel({ title, desks }: { title: string, desks: Desk[] }) {
   return (
     <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden flex flex-col h-full">
       <div className="bg-[#f8fafc] px-6 py-5 border-b border-gray-200 flex justify-between items-center shadow-sm relative z-10">
-        <h3 className="text-xl font-extrabold text-[#00315a] uppercase tracking-wide">{title}</h3>
+        <h3 className="text-xl font-extrabold text-[#012c61] uppercase tracking-wide">{title}</h3>
         {allOccupied && (
           <span className="bg-red-100 text-red-800 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest border border-red-200 shadow-sm">
             TODOS OCUPADOS

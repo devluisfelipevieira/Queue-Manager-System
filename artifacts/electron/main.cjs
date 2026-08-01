@@ -190,10 +190,7 @@ app.whenReady().then(() => {
   createMainWindow(); createOverlay();
   mainWindow.webContents.on("did-finish-load", pollDeskState);
   pollTimer = setInterval(pollDeskState, 5000);
-  // Windows NativeImage does not reliably render SVG files in the system
-  // tray. Use an embedded PNG so the icon is always visible.
-  const trayPng = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
-  const trayIcon = nativeImage.createFromBuffer(Buffer.from(trayPng, "base64")).resize({ width: 16, height: 16 });
+  const trayIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png")).resize({ width: 16, height: 16 });
   tray = new Tray(trayIcon);
   tray.setToolTip("Gerenciador de Guichê");
   tray.setContextMenu(Menu.buildFromTemplate([

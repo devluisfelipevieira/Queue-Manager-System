@@ -46,18 +46,16 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
-        <div className="bg-[#00315a] py-10 px-8 text-center border-b-[6px] border-blue-400">
-           <div className="bg-white/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 shadow-inner border border-white/5">
-             <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-             </svg>
+        <div className="bg-[#012c61] py-8 px-8 text-center border-b-[6px] border-[#b2d233]">
+           <div className="bg-white rounded-xl flex items-center justify-center mx-auto mb-5 shadow-md p-3 max-w-56">
+             <img src="/brand/prefeitura-logo.png" alt="Prefeitura de Paraíba do Sul" className="h-36 w-full object-contain" />
            </div>
            <h1 className="text-3xl font-extrabold text-white tracking-tight leading-none mb-1">
              Gerenciador
              <br />
-             <span className="text-blue-200">de Guichê</span>
+             <span className="text-[#b2d233]">de Guichê</span>
            </h1>
-           <p className="text-blue-100 mt-4 text-xs uppercase tracking-[0.2em] font-bold">Acesso Restrito do Servidor</p>
+           <p className="text-white/80 mt-4 text-xs uppercase tracking-[0.2em] font-bold">Acesso Restrito do Servidor</p>
         </div>
         <div className="p-8">
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

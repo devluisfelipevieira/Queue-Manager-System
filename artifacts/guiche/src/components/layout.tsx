@@ -15,17 +15,14 @@ export function Layout({ children, user }: { children: ReactNode, user?: { usern
 
   return (
     <div className="min-h-[100dvh] flex flex-col bg-gray-50 text-gray-900 font-sans">
-      <header className="bg-[#00315a] text-white py-4 px-6 shadow-md flex items-center justify-between">
+      <header className="bg-[#012c61] text-white py-3 px-6 shadow-md flex items-center justify-between border-b-4 border-[#b2d233]">
         <div className="flex items-center gap-4">
-          <div className="bg-white/10 p-2.5 rounded-lg border border-white/5 shadow-inner hidden sm:block">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-100">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
+          <div className="bg-white p-1 rounded-lg shadow-sm hidden sm:block">
+            <img src="/brand/prefeitura-logo.png" alt="Prefeitura de Paraíba do Sul" className="h-12 w-12 object-contain" />
           </div>
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight leading-tight">Gerenciador de Guichê</h1>
-            <p className="text-xs text-blue-200 uppercase tracking-widest font-bold">Prefeitura Municipal de Paraíba do Sul</p>
+            <p className="text-xs text-[#b2d233] uppercase tracking-widest font-bold">Prefeitura Municipal de Paraíba do Sul</p>
           </div>
         </div>
         
@@ -33,7 +30,7 @@ export function Layout({ children, user }: { children: ReactNode, user?: { usern
           <div className="flex items-center gap-5">
             <div className="text-right hidden sm:block">
               <p className="text-sm font-bold tracking-wide">{user.username}</p>
-              <p className="text-xs text-blue-200 uppercase tracking-wider font-semibold">
+              <p className="text-xs text-[#b2d233] uppercase tracking-wider font-semibold">
                 {user.role === 'admin' ? 'Administrador' : user.role === 'recepcao' ? 'Recepção' : 'Mesa'}
               </p>
             </div>

@@ -55,7 +55,7 @@
 
   --border: 214 31.8% 91.4%;
   --input: 214 31.8% 91.4%;
-  --ring: 215 100% 25%;
+  --ring: 213 98% 19%;
 
   --card: 0 0% 100%;
   --card-foreground: 220 30% 15%;
@@ -65,17 +65,17 @@
   --popover-foreground: 220 30% 15%;
   --popover-border: 214 31.8% 91.4%;
 
-  --primary: 215 100% 25%; /* Navy Blue */
+  --primary: 213 98% 19%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 214 31.8% 91.4%;
-  --secondary-foreground: 220 30% 15%;
+  --secondary: 72 65% 51%;
+  --secondary-foreground: 213 98% 19%;
 
   --muted: 214 31.8% 91.4%;
   --muted-foreground: 215.4 16.3% 46.9%;
 
-  --accent: 214 31.8% 91.4%;
-  --accent-foreground: 220 30% 15%;
+  --accent: 72 65% 51%;
+  --accent-foreground: 213 98% 19%;
 
   --destructive: 346.8 77.2% 49.8%;
   --destructive-foreground: 0 0% 100%;

@@ -1,6 +1,6 @@
 {
   "name": "@workspace/guiche-desktop",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "description": "Aplicativo Windows do Gerenciador de Guichê",
   "main": "main.cjs",
@@ -20,9 +20,10 @@
     "appId": "br.gov.rj.paraibadosul.guiche",
     "productName": "Gerenciador de Guichê",
     "asar": true,
-    "files": ["main.cjs", "preload.cjs", "overlay.html", "config.json", "icon.svg"],
+    "files": ["main.cjs", "preload.cjs", "overlay.html", "config.json", "icon.png"],
     "extraResources": [{ "from": "config.json", "to": "config.json" }],
     "win": {
+      "icon": "icon.png",
       "target": [{ "target": "nsis", "arch": ["x64"] }],
       "artifactName": "Guiche-Setup-${version}.${ext}"
     },
