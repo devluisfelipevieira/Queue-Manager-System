@@ -52,8 +52,18 @@ function showOverlay() {
   const area = screen.getPrimaryDisplay().workArea;
   overlayWindow.setPosition(area.x + area.width - 450, area.y + area.height - 210);
   overlayWindow.webContents.send("overlay:data", currentReminder);
+  overlayWindow.setAlwaysOnTop(true, "screen-saver");
   overlayWindow.show();
+  overlayWindow.focus();
   overlayWindow.moveTop();
+  // Windows can recalculate the z-order immediately after a hidden window is
+  // shown. Reassert the topmost level once the native window is visible.
+  setTimeout(() => {
+    if (!overlayWindow.isVisible()) return;
+    overlayWindow.setAlwaysOnTop(true, "screen-saver");
+    overlayWindow.moveTop();
+    overlayWindow.flashFrame(true);
+  }, 250);
 }
 
 function fireReminder() {
