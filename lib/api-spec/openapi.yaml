@@ -213,6 +213,23 @@ paths:
               schema: { $ref: "#/components/schemas/Desk" }
 
   /admin/desks/{id}:
+    put:
+      operationId: updateDesk
+      tags: [admin]
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UpdateDeskInput" }
+      responses:
+        "200":
+          description: Desk sector updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Desk" }
     delete:
       operationId: deleteDesk
       tags: [admin]
@@ -238,6 +255,19 @@ paths:
           content:
             application/json:
               schema: { $ref: "#/components/schemas/AppSettings" }
+
+  /admin/password:
+    put:
+      operationId: updateAdminPassword
+      tags: [admin]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UpdatePasswordInput" }
+      responses:
+        "204": { description: Password updated }
 
 components:
   securitySchemes:
@@ -339,7 +369,20 @@ components:
         name: { type: string }
         sector: { type: string, enum: [protocolo, divida_ativa] }
         username: { type: string }
-        password: { type: string, minLength: 6 }
+        password: { type: string, minLength: 5 }
+
+    UpdateDeskInput:
+      type: object
+      required: [sector]
+      properties:
+        sector: { type: string, enum: [protocolo, divida_ativa] }
+
+    UpdatePasswordInput:
+      type: object
+      required: [currentPassword, newPassword]
+      properties:
+        currentPassword: { type: string }
+        newPassword: { type: string, minLength: 8 }
 
     AdminDesk:
       allOf:

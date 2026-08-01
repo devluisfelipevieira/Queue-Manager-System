@@ -2,7 +2,7 @@ import { Router, type IRouter } from "express";
 import { asc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db, desksTable, settingsTable, usersTable } from "@workspace/db";
-import { authenticate, requireAdmin, type AuthenticatedRequest } from "../lib/auth";
+import { authenticate, requireAdmin, verifyCredentials, type AuthenticatedRequest } from "../lib/auth";
 import { broadcastDesksReset } from "../lib/wsManager";
 
 const router: IRouter = Router();
@@ -14,10 +14,29 @@ const createDeskSchema = z.object({
   name: z.string().trim().min(1).max(50),
   sector: z.enum(allowedSectors),
   username: z.string().trim().min(3).max(50).regex(/^[a-zA-Z0-9._-]+$/),
-  password: z.string().min(6).max(100),
+  password: z.string().min(5).max(100),
 });
 
 const settingsSchema = z.object({ reminderMinutes: z.number().int().min(1).max(240) });
+const updateDeskSchema = z.object({ sector: z.enum(allowedSectors) });
+const passwordSchema = z.object({
+  currentPassword: z.string().min(1),
+  newPassword: z.string().min(8).max(100),
+});
+
+function validationMessage(error: z.ZodError): string {
+  const issue = error.issues[0];
+  const field = String(issue?.path[0] ?? "campo");
+  const labels: Record<string, string> = {
+    deskNumber: "Número da mesa",
+    name: "Nome",
+    sector: "Setor",
+    username: "Usuário",
+    password: "Senha",
+  };
+  if (field === "password") return "A senha da mesa deve ter pelo menos 5 caracteres";
+  return `${labels[field] ?? field}: valor inválido`;
+}
 
 router.get("/settings", authenticate as any, async (_req, res): Promise<void> => {
   const [settings] = await db.select().from(settingsTable).where(eq(settingsTable.id, 1));
@@ -36,7 +55,7 @@ router.get("/admin/desks", ...adminOnly, async (_req, res): Promise<void> => {
 
 router.post("/admin/desks", ...adminOnly, async (req: AuthenticatedRequest, res): Promise<void> => {
   const parsed = createDeskSchema.safeParse(req.body);
-  if (!parsed.success) { res.status(400).json({ error: "Dados da mesa invalidos", details: parsed.error.flatten() }); return; }
+  if (!parsed.success) { res.status(400).json({ error: validationMessage(parsed.error), details: parsed.error.flatten() }); return; }
   try {
     const result = await db.transaction(async (tx) => {
       const [desk] = await tx.insert(desksTable).values({
@@ -72,6 +91,20 @@ router.delete("/admin/desks/:id", ...adminOnly, async (req, res): Promise<void> 
   res.status(204).send();
 });
 
+router.put("/admin/desks/:id", ...adminOnly, async (req, res): Promise<void> => {
+  const id = Number(Array.isArray(req.params.id) ? req.params.id[0] : req.params.id);
+  const parsed = updateDeskSchema.safeParse(req.body);
+  if (!Number.isInteger(id) || id <= 0 || !parsed.success) { res.status(400).json({ error: "Mesa ou setor inválido" }); return; }
+  const [desk] = await db.transaction(async (tx) => {
+    const updated = await tx.update(desksTable).set({ sector: parsed.data.sector, updatedAt: new Date() }).where(eq(desksTable.id, id)).returning();
+    if (updated.length) await tx.update(usersTable).set({ sector: parsed.data.sector }).where(eq(usersTable.deskId, id));
+    return updated;
+  });
+  if (!desk) { res.status(404).json({ error: "Mesa não encontrada" }); return; }
+  broadcastDesksReset(await db.select().from(desksTable).orderBy(asc(desksTable.deskNumber)));
+  res.json(desk);
+});
+
 router.put("/admin/settings", ...adminOnly, async (req, res): Promise<void> => {
   const parsed = settingsSchema.safeParse(req.body);
   if (!parsed.success) { res.status(400).json({ error: "O tempo deve estar entre 1 e 240 minutos" }); return; }
@@ -79,6 +112,15 @@ router.put("/admin/settings", ...adminOnly, async (req, res): Promise<void> => {
     .onConflictDoUpdate({ target: settingsTable.id, set: { reminderMinutes: parsed.data.reminderMinutes, updatedAt: new Date() } })
     .returning();
   res.json(settings);
+});
+
+router.put("/admin/password", ...adminOnly, async (req: AuthenticatedRequest, res): Promise<void> => {
+  const parsed = passwordSchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: "A nova senha deve ter pelo menos 8 caracteres" }); return; }
+  const verified = await verifyCredentials(req.user!.username, parsed.data.currentPassword);
+  if (!verified) { res.status(400).json({ error: "Senha atual incorreta" }); return; }
+  await db.execute(sql`UPDATE users SET password_hash = crypt(${parsed.data.newPassword}, gen_salt('bf', 10)) WHERE username = ${req.user!.username}`);
+  res.status(204).send();
 });
 
 export default router;
