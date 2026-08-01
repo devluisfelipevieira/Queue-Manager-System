@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("guicheDesktop", {
+  isAvailable: true,
   setReminder: (data) => ipcRenderer.send("reminder:set", data),
   onReminderAction: (callback) => {
     const listener = (_event, action) => callback(action);

@@ -27,7 +27,15 @@ function safeNavigation(url) { return new URL(url).origin === serverOrigin; }
 function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 1100, height: 760, minWidth: 800, minHeight: 600, show: false,
-    webPreferences: { preload: path.join(__dirname, "preload.cjs"), nodeIntegration: false, contextIsolation: true, sandbox: true },
+    webPreferences: {
+      preload: path.join(__dirname, "preload.cjs"),
+      nodeIntegration: false,
+      contextIsolation: true,
+      // The renderer loads the internal HTTP application. Keeping Node
+      // integration disabled and context isolation enabled preserves the
+      // security boundary while allowing the preload IPC bridge to run.
+      sandbox: false,
+    },
   });
   mainWindow.removeMenu();
   mainWindow.loadURL(config.serverUrl);

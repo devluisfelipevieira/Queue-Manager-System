@@ -52,6 +52,7 @@ export default function DeskPage({ user }: { user: AuthResponse }) {
 
   const elapsed = `${String(Math.floor(occupiedMs / 60_000)).padStart(2, "0")}:${String(Math.floor(occupiedMs / 1000) % 60).padStart(2, "0")}`;
   return <div className="max-w-3xl mx-auto mt-6 sm:mt-12">
+    {window.guicheDesktop?.isAvailable && <p className="mb-3 text-xs font-bold text-green-700">Aplicativo Windows conectado · lembrete nativo ativo</p>}
     {!isFree && <div className={`mb-5 rounded-xl border-2 p-4 flex flex-wrap items-center justify-between gap-3 ${reminderDue ? "bg-red-100 border-red-600 text-red-950 animate-pulse" : "bg-amber-50 border-amber-300 text-amber-950"}`}>
       <div><p className="font-black">Atendimento em andamento</p><p className="font-bold">Mesa ocupada há {elapsed} · lembrete em {reminderMinutes} min</p></div>
       {reminderDue && <div className="flex gap-2"><Button variant="destructive" onClick={() => freeDeskMutation.mutate({ id: deskId })}>LIBERAR</Button><Button variant="outline" onClick={() => setSnoozedUntil(Date.now() + 5 * 60_000)}>ADIAR 5 MIN</Button></div>}
