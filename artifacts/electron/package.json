@@ -1,0 +1,38 @@
+{
+  "name": "@workspace/guiche-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aplicativo Windows do Gerenciador de Guichê",
+  "main": "main.cjs",
+  "scripts": {
+    "dev": "electron .",
+    "build": "electron-builder --win nsis",
+    "typecheck": "node --check main.cjs && node --check preload.cjs"
+  },
+  "devDependencies": {
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "electron-updater": "^6.6.2"
+  },
+  "build": {
+    "appId": "br.gov.rj.paraibadosul.guiche",
+    "productName": "Gerenciador de Guichê",
+    "asar": true,
+    "files": ["main.cjs", "preload.cjs", "overlay-preload.cjs", "overlay.html", "config.json", "icon.svg"],
+    "extraResources": [{ "from": "config.json", "to": "config.json" }],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "artifactName": "Guiche-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Gerenciador de Guichê"
+    }
+  }
+}

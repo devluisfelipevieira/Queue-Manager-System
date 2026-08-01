@@ -34,7 +34,7 @@ export function Layout({ children, user }: { children: ReactNode, user?: { usern
             <div className="text-right hidden sm:block">
               <p className="text-sm font-bold tracking-wide">{user.username}</p>
               <p className="text-xs text-blue-200 uppercase tracking-wider font-semibold">
-                {user.role === 'recepcao' ? 'Recepção' : 'Mesa'}
+                {user.role === 'admin' ? 'Administrador' : user.role === 'recepcao' ? 'Recepção' : 'Mesa'}
               </p>
             </div>
             <button 

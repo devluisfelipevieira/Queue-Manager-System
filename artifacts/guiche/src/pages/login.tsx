@@ -20,7 +20,8 @@ export default function LoginPage() {
 
   React.useEffect(() => {
     if (user) {
-      if (user.role === 'recepcao') setLocation('/recepcao');
+      if (user.role === 'admin') setLocation('/admin');
+      else if (user.role === 'recepcao') setLocation('/recepcao');
       else setLocation(`/mesa/${user.deskId}`);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +36,8 @@ export default function LoginPage() {
     loginMutation.mutate({ data: values }, {
       onSuccess: (res) => {
         localStorage.setItem("guiche_token", res.token);
-        if (res.role === 'recepcao') setLocation('/recepcao');
+        if (res.role === 'admin') setLocation('/admin');
+        else if (res.role === 'recepcao') setLocation('/recepcao');
         else setLocation(`/mesa/${res.deskId}`);
       }
     });

@@ -5,6 +5,7 @@ import React from 'react';
 import LoginPage from './pages/login';
 import ReceptionPage from './pages/reception';
 import DeskPage from './pages/desk';
+import AdminPage from './pages/admin';
 import { Layout } from './components/layout';
 import { useGetMe } from '@workspace/api-client-react';
 
@@ -30,7 +31,8 @@ function ProtectedRoute({ component: Component, allowedRoles }: { component: Rea
 
   React.useEffect(() => {
     if (user && allowedRoles && !allowedRoles.includes(user.role)) {
-      if (user.role === 'recepcao') setLocation('/recepcao');
+      if (user.role === 'admin') setLocation('/admin');
+      else if (user.role === 'recepcao') setLocation('/recepcao');
       else setLocation(`/mesa/${user.deskId}`);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,6 +62,9 @@ function App() {
           </Route>
           <Route path="/mesa/:id">
             {() => <ProtectedRoute component={DeskPage} allowedRoles={['mesa', 'recepcao']} />}
+          </Route>
+          <Route path="/admin">
+            {() => <ProtectedRoute component={AdminPage} allowedRoles={['admin']} />}
           </Route>
           <Route>
             {() => (

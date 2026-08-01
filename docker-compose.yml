@@ -27,7 +27,7 @@ services:
       PORT: 8080
       NODE_ENV: production
       DATABASE_URL: postgresql://guiche:${POSTGRES_PASSWORD:-guiche_secret}@db:5432/guiche
-      SESSION_SECRET: ${SESSION_SECRET:-troque_em_producao_$(openssl rand -hex 32)}
+      SESSION_SECRET: ${SESSION_SECRET:-desenvolvimento-local-troque-este-segredo}
     depends_on:
       db:
         condition: service_healthy
@@ -41,6 +41,8 @@ services:
       network: host
     ports:
       - "${APP_PORT:-3000}:80"
+    volumes:
+      - ./updates:/usr/share/nginx/html/updates:ro
     depends_on:
       - api
     restart: unless-stopped

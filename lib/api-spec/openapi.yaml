@@ -14,6 +14,8 @@ tags:
     description: Authentication
   - name: desks
     description: Desk management
+  - name: admin
+    description: Administrative settings
 paths:
   /healthz:
     get:
@@ -169,6 +171,74 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /settings:
+    get:
+      operationId: getSettings
+      tags: [admin]
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Current settings
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AppSettings" }
+
+  /admin/desks:
+    get:
+      operationId: getAdminDesks
+      tags: [admin]
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Desks and their operator usernames
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/AdminDesk" }
+    post:
+      operationId: createDesk
+      tags: [admin]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/CreateDeskInput" }
+      responses:
+        "201":
+          description: Desk created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Desk" }
+
+  /admin/desks/{id}:
+    delete:
+      operationId: deleteDesk
+      tags: [admin]
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      responses:
+        "204": { description: Desk and operator deleted }
+
+  /admin/settings:
+    put:
+      operationId: updateSettings
+      tags: [admin]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UpdateSettingsInput" }
+      responses:
+        "200":
+          description: Settings updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AppSettings" }
+
 components:
   securitySchemes:
     bearerAuth:
@@ -202,7 +272,7 @@ components:
           type: string
         role:
           type: string
-          description: "recepcao or mesa"
+          description: "admin, recepcao or mesa"
         username:
           type: string
         deskId:
@@ -248,6 +318,35 @@ components:
           type: integer
         totalOccupied:
           type: integer
+
+    AppSettings:
+      type: object
+      required: [reminderMinutes]
+      properties:
+        reminderMinutes: { type: integer, minimum: 1, maximum: 240 }
+
+    UpdateSettingsInput:
+      type: object
+      required: [reminderMinutes]
+      properties:
+        reminderMinutes: { type: integer, minimum: 1, maximum: 240 }
+
+    CreateDeskInput:
+      type: object
+      required: [deskNumber, name, sector, username, password]
+      properties:
+        deskNumber: { type: integer, minimum: 1 }
+        name: { type: string }
+        sector: { type: string, enum: [protocolo, divida_ativa] }
+        username: { type: string }
+        password: { type: string, minLength: 6 }
+
+    AdminDesk:
+      allOf:
+        - { $ref: "#/components/schemas/Desk" }
+        - type: object
+          properties:
+            username: { type: [string, "null"] }
 
     ErrorResponse:
       type: object

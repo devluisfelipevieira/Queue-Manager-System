@@ -1,0 +1,5 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'"><style>
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#991b1b;color:white;border:4px solid #ef4444;border-radius:14px;overflow:hidden}main{padding:20px}h1{font-size:22px;margin:0 0 6px}p{margin:0 0 18px;font-size:15px}.buttons{display:flex;gap:10px}button{flex:1;border:0;border-radius:9px;padding:13px;font-weight:800;cursor:pointer}#free{background:white;color:#991b1b}#snooze{background:#450a0a;color:white}
+</style></head><body><main><h1 id="title">Mesa ocupada</h1><p>O atendimento ainda está em andamento?</p><div class="buttons"><button id="free">LIBERAR</button><button id="snooze">ADIAR 5 MIN</button></div></main><script>
+window.overlayApi.onData(data=>document.getElementById('title').textContent=`${data.deskName} ocupada há ${data.reminderMinutes} min`);document.getElementById('free').onclick=()=>window.overlayApi.act('free');document.getElementById('snooze').onclick=()=>window.overlayApi.act('snooze');
+</script></body></html>
