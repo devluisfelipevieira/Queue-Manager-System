@@ -56,6 +56,15 @@ router.get("/admin/desks", ...adminOnly, async (_req, res): Promise<void> => {
 router.post("/admin/desks", ...adminOnly, async (req: AuthenticatedRequest, res): Promise<void> => {
   const parsed = createDeskSchema.safeParse(req.body);
   if (!parsed.success) { res.status(400).json({ error: validationMessage(parsed.error), details: parsed.error.flatten() }); return; }
+
+  const [existingDesk] = await db.select({ id: desksTable.id }).from(desksTable)
+    .where(eq(desksTable.deskNumber, parsed.data.deskNumber)).limit(1);
+  if (existingDesk) { res.status(409).json({ error: "Essa mesa já existe, escolha outro número" }); return; }
+
+  const [existingUser] = await db.select({ username: usersTable.username }).from(usersTable)
+    .where(eq(usersTable.username, parsed.data.username)).limit(1);
+  if (existingUser) { res.status(409).json({ error: "Esse usuário já existe, escolha outro nome de usuário" }); return; }
+
   try {
     const result = await db.transaction(async (tx) => {
       const [desk] = await tx.insert(desksTable).values({
@@ -73,7 +82,15 @@ router.post("/admin/desks", ...adminOnly, async (req: AuthenticatedRequest, res)
     broadcastDesksReset(desks);
     res.status(201).json(result);
   } catch (error: any) {
-    if (error?.code === "23505") { res.status(409).json({ error: "Numero da mesa ou usuario ja existe" }); return; }
+    const databaseError = error?.cause ?? error;
+    if (databaseError?.code === "23505") {
+      const constraint = String(databaseError?.constraint ?? "");
+      const message = constraint.includes("desk_number")
+        ? "Essa mesa já existe, escolha outro número"
+        : "Esse usuário já existe, escolha outro nome de usuário";
+      res.status(409).json({ error: message });
+      return;
+    }
     throw error;
   }
 });
