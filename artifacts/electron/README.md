@@ -8,8 +8,8 @@ Antes de gerar o instalador, edite `config.json`:
 
 ```json
 {
-  "serverUrl": "http://IP_FIXO:3000",
-  "updateUrl": "http://IP_FIXO:3000/updates"
+  "serverUrl": "http://IP_FIXO",
+  "updateUrl": "http://IP_FIXO/updates"
 }
 ```
 

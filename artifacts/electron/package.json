@@ -1,6 +1,6 @@
 {
   "name": "@workspace/guiche-desktop",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": true,
   "description": "Aplicativo Windows do Gerenciador de Guichê",
   "main": "main.cjs",
